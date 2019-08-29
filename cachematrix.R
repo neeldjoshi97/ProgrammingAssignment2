@@ -1,44 +1,36 @@
-## Put comments here that give an overall description of what your
-## functions do
 
-## Write a short comment describing this function
-
-makeCacheMatrix <- function(x = matrix()) {
-# matrix object that can cashe its inverse
-
+# function to save an inverse of an invertible matrix
 
 makeCasheMatrix <- function(x = matrix()) {
   i <- NULL
   set <- function(y) {
     x <<- y
     i <<- NULL
-  }
+  } # the "special" vector initialised
+  
   get <- function() x
   setinverse <- function(solve) i <<- solve
-  getinverse <- function() i
+  getinverse <- function() i # the rest of the functions called using Lexical scoping
   list(set = set, get = get,
        setinverse = setinverse,
-       getinverse = getinverse)
+       getinverse = getinverse) # final output as list of functions
 }
 }
 
 
-## Write a short comment describing this function
-
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
-        # compute the inverse of a special matrix
-
+# function to call the cached inverse of a matrix or
+# perform the inverse operation in case there is no
+# inverse stored in the cached memory
 
 cacheSolve <- function(x, ...) {
   i <- x$getinverse()
   if(!is.null(i)) {
     message("getting cached data")
-    return(i)
+    return(i) # cached inverse returned IF present
   }
   data <- x$get()
   i <- solve(data, ...)
-  x$setinverse(i)
+  x$setinverse(i) # newly calculated inverse returned
   i
 }
 }
